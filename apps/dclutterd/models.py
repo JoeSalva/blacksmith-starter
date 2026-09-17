@@ -16,6 +16,7 @@ class Item(models.Model):
 
     name = models.CharField(max_length=120)
     business = models.ForeignKey(Business, related_name='business', on_delete=models.CASCADE)
+    description = models.CharField(max_length=500)
     condition = models.ForeignKey(Condition, related_name='condition', on_delete=models.CASCADE)
     price = models.IntegerField()
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='NGN')
