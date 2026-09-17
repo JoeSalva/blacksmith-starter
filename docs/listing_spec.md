@@ -19,11 +19,13 @@ The listing's price and currency are stored separately so that the monetary valu
 
 A listing is associated with a Business record. The Business record represents the identity of the seller independently of an account or user login.
 
-A sole admin creates the Business record. When the Business record is created, the database automatically generates its unique Business ID. The Business ID is then provided to the business and displayed as read-only.
+A sole admin creates the Business record. When the Business record is created, the backend generates a unique UUID for the Business. The UUID is provided to the business and treated as a private identifier for posting listings.
 
-When posting a listing, the poster provides the Business ID, which is used to associate the listing with the corresponding Business record. For this sprint, possession of the Business ID is the mechanism used to associate a listing with a Business. The Business ID is an identifier and does not provide authentication or protection against someone else using it.
+When posting a listing, the poster provides the Business UUID, which is used to associate the listing with the corresponding Business record. The UUID is not based on a sequential value and is intended to be difficult to guess or enumerate.
 
-Multiple listings submitted using the same Business ID are therefore associated with the same Business record and are known to belong to the same business.
+Possession of the Business UUID is the mechanism used to authorize the association of a listing with that Business for this sprint. Accounts and separate authentication mechanisms are outside the scope of this ticket.
+
+Multiple listings submitted using the same Business UUID are therefore associated with the same Business record and belong to the same business.
 
 ## What is Explicitly Out of Scope?
 
@@ -39,7 +41,7 @@ The specification was reviewed by Lars.
 
 Following the review, the specification was revised to address the following issues:
 
-* The business identification rule was clarified to state that a sole admin creates the Business record, the database automatically generates its Business ID, the ID is provided to the business, and the ID is used when associating listings with the corresponding Business record.
+* The business identification rule was clarified to state that a sole admin creates the Business record, the backend generates a unique UUID, the UUID is provided to the business, and the UUID is used to authorize the association of listings with the corresponding Business record.
 * The listing attributes were defined more explicitly so that each field has a clear meaning.
 * Price was clarified to be a monetary amount accompanied by a specified currency.
 * The specification was brought into alignment with the current model so that the documented listing shape and the model being implemented describe the same feature.
