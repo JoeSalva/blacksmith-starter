@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 
 # Create your models here.
@@ -5,9 +6,20 @@ from django.db import models
 class Condition(models.Model):
     level = models.CharField(max_length=20)
 
+class Business(models.Model):
+    bus_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=50)
+
 class Item(models.Model):
+    CURRENCY_CHOICES = [
+        ('NGN', 'NAIRA'),
+        ('USD', 'US DOLLARS')
+    ]
+
     name = models.CharField(max_length=120)
-    cost = models.IntegerField()
-    business_name = models.CharField(max_length=50)
+    business = models.ForeignKey(Business, related_name='business', on_delete=models.CASCADE)
+    description = models.CharField(max_length=500)
     condition = models.ForeignKey(Condition, related_name='condition', on_delete=models.CASCADE)
+    price = models.IntegerField()
+    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='NGN')
     # weight = models.IntegerField(max_length=4)
